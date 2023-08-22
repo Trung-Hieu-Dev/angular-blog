@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { CategoriesService } from '../services/categories.service';
 
 @Component({
   selector: 'app-categories',
@@ -8,7 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent {
-  constructor(private afs: AngularFirestore) {}
+  constructor(private categoryService: CategoriesService) {}
 
   onSubmit(formData: NgForm) {
     const categoryData = {
@@ -16,14 +16,6 @@ export class CategoriesComponent {
     };
 
     // save categories data into firebase store
-    this.afs
-      .collection('categories')
-      .add(categoryData)
-      .then((docRef) => {
-        console.log(docRef);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.categoryService.saveData(categoryData);
   }
 }
