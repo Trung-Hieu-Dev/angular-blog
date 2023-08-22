@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../models/category';
@@ -8,8 +8,16 @@ import { Category } from '../models/category';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css'],
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
+  categoryArray: Array<object> = [];
+
   constructor(private categoryService: CategoriesService) {}
+
+  ngOnInit() {
+    this.categoryService.loadData().subscribe((data) => {
+      this.categoryArray = data;
+    });
+  }
 
   onSubmit(formData: NgForm) {
     const categoryData: Category = {
@@ -18,5 +26,7 @@ export class CategoriesComponent {
 
     // save categories data into firebase store
     this.categoryService.saveData(categoryData);
+
+    formData.reset();
   }
 }
