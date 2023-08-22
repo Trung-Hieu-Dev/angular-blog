@@ -40,4 +40,18 @@ export class CategoriesService {
         }),
       );
   }
+
+  updateData(id: string, editData: Category) {
+    this.afs
+      .collection('categories')
+      .doc(id)
+      .update(editData)
+      .then((docRef) => {
+        console.log(docRef);
+        this.toastr.success('Category is updated!');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }

@@ -10,6 +10,9 @@ import { Category } from '../models/category';
 })
 export class CategoriesComponent implements OnInit {
   categoryArray: Array<object> = [];
+  formCategory: string;
+  status: string = 'Add';
+  id: string;
 
   constructor(private categoryService: CategoriesService) {}
 
@@ -25,8 +28,18 @@ export class CategoriesComponent implements OnInit {
     };
 
     // save categories data into firebase store
-    this.categoryService.saveData(categoryData);
-
+    if (this.status === 'Add') {
+      this.categoryService.saveData(categoryData);
+    } else if (this.status === 'Edit') {
+      this.categoryService.updateData(this.id, categoryData);
+      this.status = 'Add';
+    }
     formData.reset();
+  }
+
+  onEdit(category: string, id: string) {
+    this.formCategory = category;
+    this.status = 'Edit';
+    this.id = id;
   }
 }

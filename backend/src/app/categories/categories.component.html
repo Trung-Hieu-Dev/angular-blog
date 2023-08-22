@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
-      <h3 class="text-center text-theme-primary">New Categories</h3>
-      <p class="text-center">You can add new Categories from here!</p>
+      <h3 class="text-center text-theme-primary">{{ status }} Categories</h3>
+      <p class="text-center">You can {{ status }} new Categories from here!</p>
 
       <form
         class="form-inline text-center"
@@ -21,6 +21,7 @@
             [ngClass]="{
               'is-invalid': newCategory.touched && newCategory.invalid
             }"
+            [(ngModel)]="formCategory"
           />
           <div
             class="alert alert-danger w-100"
@@ -35,7 +36,7 @@
             class="btn btn-info btn-block btn-theme"
             [disabled]="categoryForm.invalid"
           >
-            Add New Category
+            {{ status }} Category
           </button>
         </div>
       </form>
@@ -60,7 +61,12 @@
               <td>{{ category.data.category }}</td>
               <td>
                 <button class="btn btn-sm btn-danger">Delete</button>
-                <button class="btn btn-sm btn-info ml-1">Edit</button>
+                <button
+                  class="btn btn-sm btn-info ml-1"
+                  (click)="onEdit(category.data.category, category.id)"
+                >
+                  Edit
+                </button>
               </td>
             </tr>
             </tbody>
