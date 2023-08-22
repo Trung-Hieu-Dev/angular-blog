@@ -60,7 +60,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ category.data.category }}</td>
               <td>
-                <button class="btn btn-sm btn-danger">Delete</button>
+                <button class="btn btn-sm btn-danger" (click)="onDelete(category.id)">Delete</button>
                 <button
                   class="btn btn-sm btn-info ml-1"
                   (click)="onEdit(category.data.category, category.id)"

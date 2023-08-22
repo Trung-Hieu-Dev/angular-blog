@@ -19,7 +19,7 @@ export class CategoriesService {
       .add(categoryData)
       .then((docRef) => {
         console.log(docRef);
-        this.toastr.success('Category is saved!');
+        this.toastr.success('Category is saved !');
       })
       .catch((err) => {
         console.log(err);
@@ -48,7 +48,21 @@ export class CategoriesService {
       .update(editData)
       .then((docRef) => {
         console.log(docRef);
-        this.toastr.success('Category is updated!');
+        this.toastr.success('Category is updated !');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  deleteData(id: string) {
+    this.afs
+      .collection('categories')
+      .doc(id)
+      .delete()
+      .then((docRef) => {
+        console.log(docRef);
+        this.toastr.success('Delete successfully !');
       })
       .catch((err) => {
         console.log(err);

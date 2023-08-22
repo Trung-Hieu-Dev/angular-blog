@@ -42,4 +42,8 @@ export class CategoriesComponent implements OnInit {
     this.status = 'Edit';
     this.id = id;
   }
+
+  onDelete(id: string) {
+    this.categoryService.deleteData(id);
+  }
 }
