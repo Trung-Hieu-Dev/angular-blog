@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CategoriesService } from '../services/categories.service';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-categories',
@@ -11,7 +12,7 @@ export class CategoriesComponent {
   constructor(private categoryService: CategoriesService) {}
 
   onSubmit(formData: NgForm) {
-    const categoryData = {
+    const categoryData: Category = {
       category: formData.value.category,
     };
 
