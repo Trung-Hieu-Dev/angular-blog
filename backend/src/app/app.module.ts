@@ -18,6 +18,8 @@ import { CategoriesComponent } from './categories/categories.component';
 // toast message
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AllPostComponent } from './posts/all-post/all-post.component';
+import { NewPostComponent } from './posts/new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterComponent,
     DashboardComponent,
     CategoriesComponent,
+    AllPostComponent,
+    NewPostComponent,
   ],
   imports: [
     BrowserModule,
