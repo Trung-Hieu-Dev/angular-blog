@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class NewPostComponent {
   permalink: string = '';
+  imgSrc: any = './assets/images/no-image-found.png';
+  selectedImg: any;
 
   onTitleChange($event: any) {
     const title = $event.target.value;
@@ -15,5 +17,15 @@ export class NewPostComponent {
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^\w-]+/g, '');
+  }
+
+  showPreview($event: any) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imgSrc = e.target.result;
+    };
+    reader.readAsDataURL($event.target.files[0]);
+
+    this.selectedImg = $event.target.files[0];
   }
 }
