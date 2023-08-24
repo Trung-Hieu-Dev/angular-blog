@@ -7,6 +7,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Post } from '../../models/post';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-new-post',
@@ -29,6 +31,7 @@ export class NewPostComponent implements OnInit {
   constructor(
     private categoryService: CategoriesService,
     private fb: FormBuilder,
+    private postService: PostsService,
   ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
@@ -74,5 +77,27 @@ export class NewPostComponent implements OnInit {
 
   get fc() {
     return this.postForm.controls;
+  }
+
+  onSubmit() {
+    const splitted = this.postForm.value.category.split('-');
+
+    const postData: Post = {
+      title: this.postForm.value.title,
+      permalink: this.postForm.value.permalink,
+      category: {
+        categoryId: splitted[0],
+        category: splitted[1],
+      },
+      postImgPath: '',
+      excerpt: this.postForm.value.excerpt,
+      content: this.postForm.value.content,
+      isFeatured: false,
+      views: 0,
+      status: 'new',
+      createdAt: new Date(),
+    };
+
+    this.postService.saveImage(this.selectedImg);
   }
 }
