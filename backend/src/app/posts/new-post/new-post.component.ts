@@ -84,7 +84,7 @@ export class NewPostComponent implements OnInit {
 
     const postData: Post = {
       title: this.postForm.value.title,
-      permalink: this.postForm.value.permalink,
+      permalink: this.postForm.get('permalink').value,
       category: {
         categoryId: splitted[0],
         category: splitted[1],
@@ -98,6 +98,9 @@ export class NewPostComponent implements OnInit {
       createdAt: new Date(),
     };
 
-    this.postService.saveImage(this.selectedImg);
+    this.postService.uploadImage(this.selectedImg, postData);
+
+    this.postForm.reset();
+    this.imgSrc = './assets/images/no-image-found.png';
   }
 }
