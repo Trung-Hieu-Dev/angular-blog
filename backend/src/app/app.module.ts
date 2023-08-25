@@ -25,6 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // angular editor
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     CategoriesComponent,
     AllPostComponent,
     NewPostComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
