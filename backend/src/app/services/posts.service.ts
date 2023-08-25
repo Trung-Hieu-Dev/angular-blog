@@ -87,4 +87,22 @@ export class PostsService {
         this.router.navigate(['/posts']);
       });
   }
+
+  deleteImage(postImgPath: string, id: string) {
+    this.storage.storage
+      .refFromURL(postImgPath)
+      .delete()
+      .then(() => {
+        this.deleteData(id);
+      });
+  }
+
+  deleteData(id: string) {
+    this.afs
+      .doc(`posts/${id}`)
+      .delete()
+      .then(() => {
+        this.toast.warning('Delete post successfully!');
+      });
+  }
 }

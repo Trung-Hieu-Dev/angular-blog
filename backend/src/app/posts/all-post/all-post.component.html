@@ -49,13 +49,19 @@
               <td>{{ post.data.category.category }}</td>
               <td>{{ post.data.createdAt.toMillis() | date }}</td>
               <td>
-                <button
-                  [queryParams]="{ id: post.id }"
-                  class="btn btn-warning btn-sm"
-                  routerLink="/posts/new"
-                >
-                  Edit
-                </button>
+                <div class=" d-inline-flex justify-content-between">
+                  <button
+                    [queryParams]="{ id: post.id }"
+                    class="btn btn-warning btn-sm d-block"
+                    routerLink="/posts/new"
+                  >
+                    Edit
+                  </button>
+                  <button (click)="onDelete(post.data.postImgPath, post.id)" class="btn btn-danger btn-sm ml-2 d-block">
+                    Delete
+                  </button>
+                </div>
+
               </td>
             </tr>
             </tbody>
