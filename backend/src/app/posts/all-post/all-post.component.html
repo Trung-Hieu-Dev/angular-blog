@@ -40,15 +40,23 @@
               <td>{{ i + 1 }}</td>
               <td>
                 <img
-                  src="{{ post.data.postImgPath }}"
                   class="img img-fluid"
+                  src="{{ post.data.postImgPath }}"
                 />
               </td>
               <td>{{ post.data.title }}</td>
               <td>{{ post.data.excerpt }}</td>
               <td>{{ post.data.category.category }}</td>
               <td>{{ post.data.createdAt.toMillis() | date }}</td>
-              <td></td>
+              <td>
+                <button
+                  [queryParams]="{ id: post.id }"
+                  class="btn btn-warning btn-sm"
+                  routerLink="/posts/new"
+                >
+                  Edit
+                </button>
+              </td>
             </tr>
             </tbody>
           </table>

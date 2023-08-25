@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from '../../services/categories.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../../models/post';
 import { PostsService } from '../../services/posts.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-post',
@@ -27,23 +23,66 @@ export class NewPostComponent implements OnInit {
   };
 
   postForm: FormGroup;
+  formStatus: string = 'Add';
+  loadedPost: any;
+  loadedPostId: string;
 
   constructor(
     private categoryService: CategoriesService,
     private fb: FormBuilder,
     private postService: PostsService,
+    private route: ActivatedRoute,
   ) {
-    this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(10)]],
-      permalink: new FormControl(
-        { value: '', disabled: true },
-        Validators.required,
-      ),
-      excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['', Validators.required],
-      postImg: ['', Validators.required],
-      content: ['', Validators.required],
+    this.route.queryParams.subscribe((value) => {
+      this.loadedPostId = value.id;
+      if (this.loadedPostId) {
+        // Edit post
+        this.postService.loadPostById(this.loadedPostId).subscribe((post) => {
+          this.loadedPost = post;
+          this.permalink = this.loadedPost.permalink;
+
+          this.postForm = this.fb.group({
+            title: [
+              this.loadedPost.title,
+              [Validators.required, Validators.minLength(10)],
+            ],
+            permalink: ['', Validators.required],
+            excerpt: [
+              this.loadedPost.excerpt,
+              [Validators.required, Validators.minLength(50)],
+            ],
+            category: [
+              `${this.loadedPost.category.categoryId}-${this.loadedPost.category.category}`,
+              Validators.required,
+            ],
+            postImg: ['', Validators.required],
+            content: [this.loadedPost.content, Validators.required],
+          });
+          this.postForm.get('permalink')?.disable();
+          this.imgSrc = this.loadedPost.postImgPath;
+          this.formStatus = 'Edit';
+        });
+      } else {
+        // Add new post
+        this.postForm = this.fb.group({
+          title: ['', [Validators.required, Validators.minLength(10)]],
+          permalink: ['', Validators.required],
+          excerpt: ['', [Validators.required, Validators.minLength(50)]],
+          category: ['', Validators.required],
+          postImg: ['', Validators.required],
+          content: ['', Validators.required],
+        });
+        this.postForm.get('permalink')?.disable();
+      }
     });
+  }
+
+  get permalinkControl() {
+    return this.postForm.get('permalink').setValue(this.permalink);
+  }
+
+  get fc() {
+    return this.postForm.controls;
   }
 
   ngOnInit() {
@@ -71,14 +110,6 @@ export class NewPostComponent implements OnInit {
     this.selectedImg = $event.target.files[0];
   }
 
-  get permalinkControl() {
-    return this.postForm.get('permalink').setValue(this.permalink);
-  }
-
-  get fc() {
-    return this.postForm.controls;
-  }
-
   onSubmit() {
     const splitted = this.postForm.value.category.split('-');
 
@@ -98,7 +129,12 @@ export class NewPostComponent implements OnInit {
       createdAt: new Date(),
     };
 
-    this.postService.uploadImage(this.selectedImg, postData);
+    this.postService.uploadImage(
+      this.selectedImg,
+      postData,
+      this.formStatus,
+      this.loadedPostId,
+    );
 
     this.postForm.reset();
     this.imgSrc = './assets/images/no-image-found.png';

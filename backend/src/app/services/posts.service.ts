@@ -4,6 +4,7 @@ import { Post } from '../models/post';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,15 @@ export class PostsService {
     private storage: AngularFireStorage,
     private afs: AngularFirestore,
     private toast: ToastrService,
+    private router: Router,
   ) {}
 
-  uploadImage(selectedImage: any, postData: Post) {
+  uploadImage(
+    selectedImage: any,
+    postData: Post,
+    formStatus: string,
+    id: string,
+  ) {
     // save image to Storage
     const filePath = `postIMG/${Date.now()}`;
 
@@ -29,8 +36,12 @@ export class PostsService {
         .subscribe((URL) => {
           postData.postImgPath = URL;
 
-          // insert post data into Firestore Database
-          this.saveData(postData);
+          // insert or update post data into Firestore Database
+          if (formStatus === 'Add') {
+            this.saveData(postData);
+          } else {
+            this.updateData(id, postData);
+          }
         });
     });
   }
@@ -41,6 +52,7 @@ export class PostsService {
       .add(postData)
       .then((docRef) => {
         this.toast.success('Data insert successfully!');
+        this.router.navigate(['/posts']);
       })
       .catch((err) => {
         console.log(err);
@@ -60,5 +72,19 @@ export class PostsService {
           });
         }),
       );
+  }
+
+  loadPostById(id: string) {
+    return this.afs.doc(`posts/${id}`).valueChanges();
+  }
+
+  updateData(id: string, post: Post) {
+    this.afs
+      .doc(`posts/${id}`)
+      .update(post)
+      .then(() => {
+        this.toast.success('Updated successfully!');
+        this.router.navigate(['/posts']);
+      });
   }
 }
