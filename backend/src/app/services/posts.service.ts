@@ -3,6 +3,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Post } from '../models/post';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -44,5 +45,20 @@ export class PostsService {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  loadData() {
+    return this.afs
+      .collection('posts')
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const id = a.payload.doc.id;
+            const data = a.payload.doc.data();
+            return { id, data };
+          });
+        }),
+      );
   }
 }

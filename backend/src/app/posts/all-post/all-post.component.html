@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div class="row">
     <div class="col-md-12">
       <div class="card shadow-effect bg-secondary-theme">
@@ -12,6 +12,46 @@
           <button class="btn btn-warning ml-2" routerLink="/">
             Back To Dashboard
           </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Post List-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect">
+        <div class="card-body overflow-auto">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th class="text-center">No</th>
+              <th>Post Image</th>
+              <th>Title</th>
+              <th>Excerpt</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let post of postArray; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                <img
+                  src="{{ post.data.postImgPath }}"
+                  class="img img-fluid"
+                />
+              </td>
+              <td>{{ post.data.title }}</td>
+              <td>{{ post.data.excerpt }}</td>
+              <td>{{ post.data.category.category }}</td>
+              <td>{{ post.data.createdAt.toMillis() | date }}</td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
