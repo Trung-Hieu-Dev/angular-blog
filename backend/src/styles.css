@@ -11,9 +11,10 @@
   --navbar-footer-color: #f9f9f9;
 }
 
+
 body {
   font-family: "Roboto", sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--body-text-color);
 }
 
@@ -34,7 +35,7 @@ body {
 
 .shadow-effect {
   box-shadow: 0 0 33px -10px rgba(71, 114, 254, 0.3);
-  border: none;
+  border: none !important;
 }
 
 .bg-theme {
@@ -42,7 +43,7 @@ body {
 }
 
 .bg-secondary-theme {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color) !important;
 }
 
 .text-theme-primary {
@@ -53,12 +54,10 @@ input[type="text"],
 input[type="email"] {
   height: 60px;
   padding-left: 20px;
-  font-size: 13px;
   width: 100%;
 }
 
 .btn-theme {
-  height: 58px;
   border: none;
   font-size: 13px;
   background-color: var(--primary-color) !important;

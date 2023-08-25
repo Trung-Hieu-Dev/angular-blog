@@ -1,3 +1,7 @@
 .card.shadow-effect {
   border: none;
 }
+
+.btn-theme {
+  height: 58px;
+}
