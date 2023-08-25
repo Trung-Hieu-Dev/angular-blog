@@ -105,4 +105,13 @@ export class PostsService {
         this.toast.warning('Delete post successfully!');
       });
   }
+
+  toggleFeatured(id: string, data: any) {
+    this.afs
+      .doc(`posts/${id}`)
+      .update(data)
+      .then(() => {
+        this.toast.success('Featured is changed!');
+      });
+  }
 }
