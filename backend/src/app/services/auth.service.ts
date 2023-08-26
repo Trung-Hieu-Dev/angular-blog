@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   constructor(
     private afAuth: AngularFireAuth,
     private toastr: ToastrService,
@@ -19,6 +22,9 @@ export class AuthService {
       .then((logRef) => {
         this.toastr.success('Login successfully!');
         this.loadUserData();
+
+        this.loggedIn.next(true);
+
         this.router.navigate(['/']);
       })
       .catch((e) => {
@@ -31,5 +37,20 @@ export class AuthService {
       // console.log(JSON.parse(JSON.stringify(user)));
       localStorage.setItem('user', JSON.stringify(user));
     });
+  }
+
+  logout() {
+    this.afAuth.signOut().then(() => {
+      this.toastr.success('User logout successfully!');
+      localStorage.removeItem('user');
+
+      this.loggedIn.next(false);
+
+      this.router.navigate(['/login']);
+    });
+  }
+
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 }
