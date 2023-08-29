@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +7,30 @@ import { Observable } from 'rxjs';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  userEmail: any;
-  isLoggedIn$: Observable<boolean>;
+  userEmail: string = '';
+  isLoggedIn$: boolean = false;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.userEmail = JSON.parse(localStorage.getItem('user'))?.email;
+    this.authService.getAuth().subscribe((response) => {
+      if (response) {
+        // INFO: use for login actions
+        this.isLoggedIn$ = true;
+        this.userEmail = response.email;
+      } else {
+        // INFO: in case, the page is reloaded
+        const userData = this.authService.getUserData();
 
-    this.isLoggedIn$ = this.authService.isLoggedIn();
+        if (userData) {
+          this.isLoggedIn$ = true;
+          this.userEmail = userData.email;
+        } else {
+          this.isLoggedIn$ = false;
+          this.userEmail = '';
+        }
+      }
+    });
   }
 
   onLogout() {

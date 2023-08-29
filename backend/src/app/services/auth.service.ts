@@ -3,12 +3,18 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { IUserData } from '../models/user';
+
+const USER_DATA_LOCALSTORAGE_NAME = 'user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  loggedIn: BehaviorSubject<IUserData | null> =
+    new BehaviorSubject<IUserData | null>(null);
+
+  isLoggedInGuard: boolean = false;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -23,7 +29,8 @@ export class AuthService {
         this.toastr.success('Login successfully!');
         this.loadUserData();
 
-        this.loggedIn.next(true);
+        this.loggedIn.next(logRef?.user?.toJSON() as unknown as IUserData);
+        this.isLoggedInGuard = true;
 
         this.router.navigate(['/']);
       })
@@ -35,22 +42,32 @@ export class AuthService {
   loadUserData() {
     this.afAuth.authState.subscribe((user) => {
       // console.log(JSON.parse(JSON.stringify(user)));
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem(USER_DATA_LOCALSTORAGE_NAME, JSON.stringify(user));
     });
   }
 
   logout() {
     this.afAuth.signOut().then(() => {
       this.toastr.success('User logout successfully!');
-      localStorage.removeItem('user');
+      localStorage.removeItem(USER_DATA_LOCALSTORAGE_NAME);
 
-      this.loggedIn.next(false);
+      this.loggedIn.next(null);
+      this.isLoggedInGuard = false;
 
       this.router.navigate(['/login']);
     });
   }
 
-  isLoggedIn() {
+  getUserData() {
+    const userDatePlainText = localStorage.getItem(USER_DATA_LOCALSTORAGE_NAME);
+    const userData: IUserData | null = userDatePlainText
+      ? JSON.parse(userDatePlainText)
+      : null;
+
+    return userData;
+  }
+
+  getAuth() {
     return this.loggedIn.asObservable();
   }
 }

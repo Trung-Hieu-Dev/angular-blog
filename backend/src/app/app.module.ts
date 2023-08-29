@@ -29,6 +29,8 @@ import { LoginComponent } from './auth/login/login.component';
 
 // auth
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AngularEditorModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

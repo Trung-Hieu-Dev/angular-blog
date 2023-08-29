@@ -7,8 +7,6 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  protected readonly onsubmit = onsubmit;
-
   constructor(private authService: AuthService) {}
 
   onSubmit(formValue: any) {
