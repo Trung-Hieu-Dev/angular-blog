@@ -30,7 +30,8 @@ export class AuthService {
         this.loadUserData();
 
         this.loggedIn.next(logRef?.user?.toJSON() as unknown as IUserData);
-        this.isLoggedInGuard = true;
+
+        this.setLoggedInGuard(true);
 
         this.router.navigate(['/']);
       })
@@ -41,8 +42,8 @@ export class AuthService {
 
   loadUserData() {
     this.afAuth.authState.subscribe((user) => {
-      // console.log(JSON.parse(JSON.stringify(user)));
       localStorage.setItem(USER_DATA_LOCALSTORAGE_NAME, JSON.stringify(user));
+      // this.setLoggedInGuard(true); // why if set setLoggedInGuard here, result will be return null when get value??
     });
   }
 
@@ -50,9 +51,9 @@ export class AuthService {
     this.afAuth.signOut().then(() => {
       this.toastr.success('User logout successfully!');
       localStorage.removeItem(USER_DATA_LOCALSTORAGE_NAME);
+      this.setLoggedInGuard(false);
 
       this.loggedIn.next(null);
-      this.isLoggedInGuard = false;
 
       this.router.navigate(['/login']);
     });
@@ -60,6 +61,7 @@ export class AuthService {
 
   getUserData() {
     const userDatePlainText = localStorage.getItem(USER_DATA_LOCALSTORAGE_NAME);
+
     const userData: IUserData | null = userDatePlainText
       ? JSON.parse(userDatePlainText)
       : null;
@@ -69,5 +71,15 @@ export class AuthService {
 
   getAuth() {
     return this.loggedIn.asObservable();
+  }
+
+  setLoggedInGuard(value: boolean): void {
+    this.isLoggedInGuard = value;
+    localStorage.setItem('isLoggedInGuard', JSON.stringify(value));
+  }
+
+  getLoggedInGuard(): boolean {
+    const isLoggedInGuard = localStorage.getItem('isLoggedInGuard');
+    return isLoggedInGuard ? JSON.parse(isLoggedInGuard) : false;
   }
 }

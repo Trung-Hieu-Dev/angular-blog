@@ -60,6 +60,7 @@ export class NewPostComponent implements OnInit {
           });
           this.postForm.get('permalink')?.disable();
           this.imgSrc = this.loadedPost.postImgPath;
+
           this.formStatus = 'Edit';
         });
       } else {
