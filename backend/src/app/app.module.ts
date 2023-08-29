@@ -25,6 +25,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // angular editor
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { LoginComponent } from './auth/login/login.component';
+
+// auth
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +41,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     CategoriesComponent,
     AllPostComponent,
     NewPostComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +49,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireAuthModule,
     FormsModule,
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
@@ -49,7 +57,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AngularEditorModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

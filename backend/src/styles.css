@@ -47,11 +47,12 @@ body {
 }
 
 .text-theme-primary {
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
   height: 60px;
   padding-left: 20px;
   width: 100%;
