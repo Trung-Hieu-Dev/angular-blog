@@ -14,7 +14,6 @@ export class CategoryNavbarComponent implements OnInit {
   ngOnInit() {
     this.categoryService.loadData().subscribe((value) => {
       this.categoriesArray = value;
-      console.log(value);
     });
   }
 }

@@ -8,17 +8,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-3">
-        <app-post-card></app-post-card>
-      </div>
-      <div class="col-lg-3">
-        <app-post-card></app-post-card>
-      </div>
-      <div class="col-lg-3">
-        <app-post-card></app-post-card>
-      </div>
-      <div class="col-lg-3">
-        <app-post-card></app-post-card>
+      <div *ngFor="let featuredPost of featuredPostsArray" class="col-lg-3">
+        <app-post-card [postData]="featuredPost"></app-post-card>
       </div>
     </div>
   </div>
@@ -26,7 +17,7 @@
 
 
 <!--Latest Section-->
-<section class="container-fluid  mt-5">
+<section class="container-fluid mt-5">
   <div class="col-md-12 text-center">
     <h2>LATEST POSTS</h2>
     <p>Lorem ipsum dolor sit amet consectetur. Nulla nec sit fusce ac.</p>

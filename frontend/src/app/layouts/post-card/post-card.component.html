@@ -1,22 +1,20 @@
-<div class="card shadow-effect">
+<div *ngIf="postData" class="card shadow-effect">
   <img
     alt="post image"
-    class="card-img-top"
-    src="https://plugins-media.makeupar.com/smb/blog/post/2023-05-17/1ad5b4e0-8e0c-4615-9c95-aa72f14a28fe.jpg"
+    class="card-img-top img-custom"
+    src="{{postData?.data.postImgPath}}"
   />
   <div class="card-body">
-    <small class="bg-light text-danger text-center">Design</small>
+    <small class="bg-light text-danger text-center">{{postData?.data.category.category}}</small>
     <small class="bg-light text-success text-center ml-3">Featured</small>
-    <small class="bg-light text-info text-center ml-3">Views - 100,250</small>
+    <small class="bg-light text-info text-center ml-3">Views - {{postData?.data.views}}</small>
 
-    <h5 class="mt-1">HOW TO START A BLOG 2023 EDITED NEW CATEGORY</h5>
+    <h5 class="mt-1">{{postData?.data.title}}</h5>
     <p>
-      Lorem ipsum dolor sit amet consectetur. Faucibus egestas auctor tristique
-      vitae risus. Et ut proin quam ut. Justo non habitant euismod pharetra quis
-      tempus scelerisque tempus.
+      {{postData?.data.excerpt}}
     </p>
-    <small class="bg-light text-warning text-center ml-3">
-      LAST UPDATED - SEP 20, 2023
+    <small class="bg-light text-warning text-center ml-sm-0 ml-md-2">
+      LAST UPDATED - {{postData?.data.createdAt.toMillis() | date}}
     </small>
   </div>
 </div>
