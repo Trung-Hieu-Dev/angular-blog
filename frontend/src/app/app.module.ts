@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
+
+// firebase
+import { environment } from '../environments/environment.prod';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+// components
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './layouts/header/header.component';
 import { CategoryNavbarComponent } from './layouts/category-navbar/category-navbar.component';
@@ -32,13 +38,15 @@ import { PostCardComponent } from './layouts/post-card/post-card.component';
     CommentFormComponent,
     CommentListComponent,
     AboutUsComponent,
-    PostCardComponent
+    PostCardComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
