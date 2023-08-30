@@ -8,10 +8,15 @@ import { PostsService } from '../../services/posts.service';
 })
 export class HomeComponent implements OnInit {
   featuredPostsArray: Array<object>;
+  latestPostsArray: Array<object>;
 
   constructor(private postService: PostsService) {
     this.postService.loadFeatured().subscribe((value) => {
       this.featuredPostsArray = value;
+    });
+
+    this.postService.loadLatest().subscribe((value) => {
+      this.latestPostsArray = value;
     });
   }
 

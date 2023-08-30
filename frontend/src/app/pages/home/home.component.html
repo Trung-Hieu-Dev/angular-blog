@@ -17,29 +17,14 @@
 
 
 <!--Latest Section-->
-<section class="container-fluid mt-5">
+<section class="container mt-5">
   <div class="col-md-12 text-center">
     <h2>LATEST POSTS</h2>
     <p>Lorem ipsum dolor sit amet consectetur. Nulla nec sit fusce ac.</p>
   </div>
   <div class="row">
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
-    </div>
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
-    </div>
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
-    </div>
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
-    </div>
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
-    </div>
-    <div class="col-md-4 mt-3">
-      <app-post-card></app-post-card>
+    <div *ngFor="let latestPost of latestPostsArray" class="col-md-4 mt-3">
+      <app-post-card [postData]="latestPost"></app-post-card>
     </div>
   </div>
 </section>

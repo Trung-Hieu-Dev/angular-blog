@@ -24,4 +24,19 @@ export class PostsService {
         }),
       );
   }
+
+  loadLatest() {
+    return this.afs
+      .collection('posts', (ref) => ref.orderBy('createdAt'))
+      .snapshotChanges()
+      .pipe(
+        map((actions) => {
+          return actions.map((a) => {
+            const id = a.payload.doc.id;
+            const data = a.payload.doc.data();
+            return { id, data };
+          });
+        }),
+      );
+  }
 }
