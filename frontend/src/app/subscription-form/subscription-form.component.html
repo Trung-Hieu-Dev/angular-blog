@@ -6,23 +6,46 @@
         Lorem ipsum dolor sit amet consectetur. Imperdiet est in dui accumsan
         nisi non quis in velit.
       </p>
-      <form action="" class="form-inline mb-5 mt-5">
+      <form #subForm="ngForm" (ngSubmit)="onSubmit(subForm.value)" class="form-inline mb-5 mt-5">
         <div class="form-group col-md-5">
           <input
-            class="form-control shadow-effect"
+            #Name="ngModel"
+            [ngClass]="{ 'is-invalid': Name.touched && Name.invalid }"
+            class="form-control"
+            name="name"
+            ngModel
             placeholder="Your Name"
+            required
             type="text"
           />
+          <div *ngIf="Name.touched && Name.invalid" class="text-danger">
+            <div *ngIf="Name.errors?.required">Name is required</div>
+          </div>
         </div>
         <div class="form-group col-md-5">
           <input
-            class="form-control shadow-effect"
+            #Email="ngModel"
+            [ngClass]="{ 'is-invalid': Email.touched && Email.invalid }"
+            class="form-control"
+            email
+            name="email"
+            ngModel
             placeholder="Email Address"
+            required
             type="email"
           />
+          <div *ngIf="Email.touched && Email.invalid" class="text-danger">
+            <div *ngIf="Email.errors?.required">Email is required</div>
+            <div *ngIf="Email.errors?.email">Email is invalid</div>
+          </div>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-info btn-block btn-theme">SUBSCRIBE</button>
+          <button
+            [disabled]="subForm.invalid"
+            class="btn btn-info btn-block btn-theme"
+          >
+            SUBSCRIBE
+          </button>
         </div>
       </form>
     </div>
