@@ -19,4 +19,10 @@ export class SubcribersService {
         console.log(err.message);
       });
   }
+
+  checkSubs(subEmail: string) {
+    return this.afs
+      .collection('subscribers', (ref) => ref.where('email', '==', subEmail))
+      .get();
+  }
 }

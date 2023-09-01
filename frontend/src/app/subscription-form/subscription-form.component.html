@@ -6,7 +6,19 @@
         Lorem ipsum dolor sit amet consectetur. Imperdiet est in dui accumsan
         nisi non quis in velit.
       </p>
-      <form #subForm="ngForm" (ngSubmit)="onSubmit(subForm.value)" class="form-inline mb-5 mt-5">
+
+      <!-- Error Alert     -->
+      <div *ngIf="isErrorEmail" class="alert alert-danger">
+        Email is already in used
+      </div>
+
+      <!-- Subscribe Alert     -->
+      <div *ngIf="isSubscribed" class="alert alert-info">
+        Thank you for your subscribe!
+      </div>
+
+
+      <form #subForm="ngForm" (ngSubmit)="onSubmit(subForm.value)" *ngIf="!isSubscribed" class="form-inline mb-5 mt-5">
         <div class="form-group col-md-5">
           <input
             #Name="ngModel"

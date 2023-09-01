@@ -8,6 +8,9 @@ import { SubcribersService } from '../services/subcribers.service';
   styleUrls: ['./subscription-form.component.css'],
 })
 export class SubscriptionFormComponent implements OnInit {
+  isErrorEmail: boolean = false;
+  isSubscribed: boolean = false;
+
   constructor(private subService: SubcribersService) {}
 
   ngOnInit() {}
@@ -17,6 +20,15 @@ export class SubscriptionFormComponent implements OnInit {
       name: formData.name,
       email: formData.email,
     };
-    this.subService.addSubs(subData);
+    this.subService.checkSubs(subData.email).subscribe((value) => {
+      if (value.empty) {
+        this.subService.addSubs(subData);
+        this.isErrorEmail = false;
+        this.isSubscribed = true;
+      } else {
+        console.log('Email is ready in used!');
+        this.isErrorEmail = true;
+      }
+    });
   }
 }
