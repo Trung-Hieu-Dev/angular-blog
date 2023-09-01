@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/compat/firestore';
+import {map} from 'rxjs';
+
+// import 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +57,22 @@ export class PostsService {
           });
         }),
       );
+  }
+
+  loadPostById(postId) {
+    return this.afs.doc(`posts/${postId}`).valueChanges();
+  }
+
+  countViews(postId: any, viewCount: number) {
+    const viewsCount = viewCount + 1;
+    this.afs
+      .doc(`posts/${postId}`)
+      .update({ views: viewsCount })
+      .then(() => {
+        console.log('updated');
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 }
