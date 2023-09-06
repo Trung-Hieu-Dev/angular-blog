@@ -1,1 +1,8 @@
+.img-custom {
+  height: 200px;
+}
 
+.card {
+  min-height: 400px;
+  max-width: 400px;
+}
