@@ -31,6 +31,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
+import { SubcribersComponent } from './subcribers/subcribers.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { AuthService } from './services/auth.service';
     AllPostComponent,
     NewPostComponent,
     LoginComponent,
+    SubcribersComponent,
   ],
   imports: [
     BrowserModule,
