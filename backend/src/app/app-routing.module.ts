@@ -8,7 +8,7 @@ import { AllPostComponent } from './posts/all-post/all-post.component';
 import { NewPostComponent } from './posts/new-post/new-post.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AuthGuardService } from './services/auth-guard.service';
-import { SubcribersComponent } from './subcribers/subcribers.component';
+import { SubscribersComponent } from './subcribers/subscribers.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuardService] },
@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'subscriber',
-    component: SubcribersComponent,
+    component: SubscribersComponent,
     canActivate: [AuthGuardService],
   },
 ];

@@ -29,13 +29,16 @@
             </thead>
 
             <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr *ngFor="let subscriber of subscriberArray; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ subscriber.data.name }}</td>
+              <td>{{ subscriber.data.email }}</td>
               <td>
                 <div class="d-inline-flex justify-content-between">
-                  <button class="btn btn-danger btn-sm ml-2 d-block">
+                  <button
+                    (click)="onDelete(subscriber.id)"
+                    class="btn btn-danger btn-sm ml-2 d-block"
+                  >
                     Delete
                   </button>
                 </div>
