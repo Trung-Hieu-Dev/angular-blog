@@ -1,6 +1,6 @@
 <!--Featured Section-->
 <section class="featured-section">
-  <div class="container-fluid">
+  <div class="container-fluid px-md-5">
     <div class="row">
       <div class="col-md-12 text-center mt-5">
         <h2 class="text-white">FEATURED POSTS</h2>
@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="row">
-      <div *ngFor="let featuredPost of featuredPostsArray" class="col-lg-3">
+      <div *ngFor="let featuredPost of featuredPostsArray" class="col-lg-3 mb-2 mb-md-5">
         <app-post-card [postData]="featuredPost"></app-post-card>
       </div>
     </div>
