@@ -1,17 +1,22 @@
-<div class="card mb-5 mt-5 pb-5 shadow-effect">
+<div
+  *ngIf="commentsArray?.length > 0"
+  class="card mb-5 mt-5 pb-5 shadow-effect"
+>
   <div class="card-body">
-    <h4 class="mt-3 mb-3">Comments (12,345)</h4>
+    <h4 class="mt-3 mb-3">Comments ({{ commentCount }})</h4>
 
     <!-- Comments Section   -->
     <div *ngFor="let comment of commentsArray" class="comment-box mt-3">
-      <h6 class="mb-0">{{comment.data.name}}</h6>
-      <small class="text-danger">LAST UPDATED - {{comment.data.createdAt.toMillis() | date}}</small>
+      <h6 class="mb-0">{{ comment.data.name }}</h6>
+      <small class="text-danger"
+      >LAST UPDATED - {{ comment.data.createdAt.toMillis() | date }}</small
+      >
 
       <div class="mt-3 mb-3">
-        {{comment.data.comment}}
+        {{ comment.data.comment }}
       </div>
 
-      <a class="mt-1" href="#">Reply</a>
+      <a class="mt-1" href="post/9pknTh4NIdKh98sXp52m#comment">Reply</a>
       <a class="mt-1 ml-3" href="#">View Reply</a>
 
       <!--  Replies Section   -->

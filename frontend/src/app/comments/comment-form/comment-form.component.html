@@ -3,7 +3,7 @@
     <h4>Leave a Comment</h4>
     <p>You can leave your comment by using this comment form</p>
 
-    <form #commentForm='ngForm' (ngSubmit)="onSubmit(commentForm.value)">
+    <form #commentForm='ngForm' (ngSubmit)="onSubmit(commentForm.value)" id="comment">
       <div class="form-group">
         <label>Name</label>
         <input

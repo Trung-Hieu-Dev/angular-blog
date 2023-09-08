@@ -6,7 +6,10 @@ import { map } from 'rxjs';
   providedIn: 'root',
 })
 export class CommentsService {
-  constructor(private afs: AngularFirestore) {}
+  constructor(
+    private afs: AngularFirestore,
+    private firestore: AngularFirestore,
+  ) {}
 
   addComment(commentData: any) {
     this.afs
@@ -20,9 +23,11 @@ export class CommentsService {
       });
   }
 
-  loadLatest() {
+  loadLatest(postId: string) {
     return this.afs
-      .collection('comments', (ref) => ref.orderBy('createdAt', 'desc'))
+      .collection('comments', (ref) =>
+        ref.orderBy('createdAt', 'desc').where('postId', '==', postId),
+      )
       .snapshotChanges()
       .pipe(
         map((actions) => {
@@ -33,5 +38,15 @@ export class CommentsService {
           });
         }),
       );
+  }
+
+  countDocuments(postId): Promise<number> {
+    return this.firestore
+      .collection('comments', (ref) => ref.where('postId', '==', postId))
+      .get()
+      .toPromise()
+      .then((querySnapshot) => {
+        return querySnapshot.size;
+      });
   }
 }
