@@ -1,0 +1,6 @@
+.btn-home {
+  height: 58px;
+  border: 1px solid var(--primary-color);
+  font-size: 16px;
+  color: var(--primary-color);
+}
