@@ -17,4 +17,8 @@ export class ContactComponent implements OnInit {
       console.log(this.contactArray);
     });
   }
+
+  onDelete(id: string) {
+    this.contactService.deleteData(id);
+  }
 }
