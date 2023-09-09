@@ -24,6 +24,7 @@ import { CommentListComponent } from './comments/comment-list/comment-list.compo
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { PostCardComponent } from './layouts/post-card/post-card.component';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { ChildCommentListComponent } from './comments/child-comment-list/child-comment-list.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
     CommentListComponent,
     AboutUsComponent,
     PostCardComponent,
+    ChildCommentListComponent,
   ],
   imports: [
     BrowserModule,

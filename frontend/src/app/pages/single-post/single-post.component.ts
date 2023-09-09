@@ -31,7 +31,6 @@ export class SinglePostComponent implements OnInit, OnDestroy {
         .subscribe((post) => {
           this.loadedPost = post;
           this.loadSimilarPost(this.loadedPost.category.categoryId);
-          console.log(this.loadedPost);
         });
     });
   }

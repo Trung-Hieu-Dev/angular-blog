@@ -1,45 +1,47 @@
-<div class="card mb-5 mt-5 pb-5 shadow-effect">
+<div
+  *ngIf="commentsArray?.length > 0"
+  class="card mb-5 mt-5 pb-5 shadow-effect"
+>
   <div class="card-body">
-    <h4 class="mt-3 mb-3">Comments (12,345)</h4>
+    <h4 class="mt-3 mb-3">Comments ({{ commentCount }})</h4>
 
-    <div class="comment-box mt-3">
-      <h6 class="mb-0">John Doe</h6>
-      <small class="text-danger">LAST UPDATED - SEP 20, 2023</small>
-
-      <div class="mt-3 mb-3">
-        Lorem ipsum dolor sit amet consectetur. Volutpat pellentesque aliquam
-        mauris purus non. Interdum tellus ornare enim proin nulla tristique
-        ullamcorper nibh.
-      </div>
-
-      <a class="mt-1" href="#">Reply</a>
-      <a class="mt-1 ml-3" href="#">View Reply</a>
-    </div>
-    <div class="comment-box mt-3">
-      <h6 class="mb-0">John Doe</h6>
-      <small class="text-danger">LAST UPDATED - SEP 20, 2023</small>
+    <!-- Comments Section   -->
+    <div
+      *ngFor="let comment of commentsArray; let i = index"
+      class="comment-box mt-3"
+    >
+      <h6 class="mb-0">{{ comment.data.name }}</h6>
+      <small class="text-danger"
+      >LAST UPDATED - {{ comment.data.createdAt.toMillis() | date }}</small
+      >
 
       <div class="mt-3 mb-3">
-        Lorem ipsum dolor sit amet consectetur. Volutpat pellentesque aliquam
-        mauris purus non. Interdum tellus ornare enim proin nulla tristique
-        ullamcorper nibh.
+        {{ comment.data.comment }}
       </div>
 
-      <a class="mt-1" href="#">Reply</a>
-      <a class="mt-1 ml-3" href="#">View Reply</a>
-    </div>
-    <div class="comment-box mt-3">
-      <h6 class="mb-0">John Doe</h6>
-      <small class="text-danger">LAST UPDATED - SEP 20, 2023</small>
+      <button (click)="toggleReply(i)" class="btn btn-sm btn-primary btn-custom mt-1">
+        Reply
+      </button>
 
-      <div class="mt-3 mb-3">
-        Lorem ipsum dolor sit amet consectetur. Volutpat pellentesque aliquam
-        mauris purus non. Interdum tellus ornare enim proin nulla tristique
-        ullamcorper nibh.
+      <button
+        (click)="toggleReplyList(i)"
+        class="btn btn-sm btn-primary btn-custom mt-1 ml-3"
+      >
+        View Reply
+      </button>
+
+      <app-comment-form
+        *ngIf="isReply && activeCommentIndex === i"
+        [parentId]="comment.id"
+      ></app-comment-form>
+
+      <!--        Replies Section   -->
+      <div *ngIf="isReplyList && activeCommentIndex === i">
+        <app-child-comment-list
+          [parentId]="comment.id"
+          [postId]="comment.data.postId"
+        ></app-child-comment-list>
       </div>
-
-      <a class="mt-1" href="#">Reply</a>
-      <a class="mt-1 ml-3" href="#">View Reply</a>
     </div>
   </div>
 </div>
