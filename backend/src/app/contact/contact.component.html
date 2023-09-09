@@ -1,0 +1,55 @@
+<div class="container mb-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect bg-secondary-theme">
+        <div class="card-body text-center">
+          <h3 class="text-theme-primary">All Contacts</h3>
+          <p>From here you can manage your Contacts</p>
+          <button class="btn btn-warning ml-2" routerLink="/">
+            Back To Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Contact List-->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card shadow-effect">
+        <div class="card-body overflow-auto">
+          <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th class="text-center">No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let contact of contactArray; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ contact.data.name }}</td>
+              <td>{{ contact.data.email }}</td>
+              <td>{{ contact.data.message }}</td>
+              <td>
+                <div class="d-inline-flex justify-content-between">
+                  <button
+                    (click)="onDelete(contact.id)"
+                    class="btn btn-danger btn-sm ml-2 d-block"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
