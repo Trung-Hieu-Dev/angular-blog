@@ -23,10 +23,13 @@ export class CommentsService {
       });
   }
 
-  loadLatest(postId: string) {
+  loadComments(postId: string, parentId = null) {
     return this.afs
       .collection('comments', (ref) =>
-        ref.orderBy('createdAt', 'desc').where('postId', '==', postId),
+        ref
+          .orderBy('createdAt', 'desc')
+          .where('postId', '==', postId)
+          .where('parentId', '==', parentId),
       )
       .snapshotChanges()
       .pipe(

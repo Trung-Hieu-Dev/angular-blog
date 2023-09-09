@@ -10,6 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 export class CommentListComponent implements OnInit {
   commentsArray: Array<object>;
   commentCount: number;
+  isReply: boolean = false;
+  isReplyList: boolean = false;
+  activeCommentIndex: number | null = null;
 
   constructor(
     private commentService: CommentsService,
@@ -18,16 +21,26 @@ export class CommentListComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((value) => {
-      this.commentService.loadLatest(value.id).subscribe((value) => {
+      this.commentService.loadComments(value.id).subscribe((value) => {
         this.commentsArray = value;
-        console.log(this.commentsArray);
       });
 
       // Counting comments
-      const collectionName = 'comments';
       this.commentService.countDocuments(value.id).then((count) => {
         this.commentCount = count;
       });
     });
+  }
+
+  toggleReply(index: number) {
+    this.isReply = !this.isReply;
+    this.isReplyList = false;
+    this.activeCommentIndex = index;
+  }
+
+  toggleReplyList(index: number) {
+    this.isReplyList = !this.isReplyList;
+    this.isReply = false;
+    this.activeCommentIndex = index;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommentsService } from '../../services/comments.service';
 import { NgForm } from '@angular/forms';
@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 export class CommentFormComponent implements OnInit {
   postId: string;
   @ViewChild('commentForm') commentForm: NgForm;
+  @Input() parentId: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,13 +25,25 @@ export class CommentFormComponent implements OnInit {
   }
 
   onSubmit(formData: any) {
-    const data = {
-      name: formData.name,
-      comment: formData.comment,
-      postId: this.postId,
-      createdAt: new Date(),
-    };
-    this.commentService.addComment(data);
+    if (this.parentId) {
+      const data = {
+        name: formData.name,
+        comment: formData.comment,
+        postId: this.postId,
+        parentId: this.parentId,
+        createdAt: new Date(),
+      };
+      this.commentService.addComment(data);
+    } else {
+      const data = {
+        name: formData.name,
+        comment: formData.comment,
+        postId: this.postId,
+        parentId: null,
+        createdAt: new Date(),
+      };
+      this.commentService.addComment(data);
+    }
 
     this.commentForm.reset();
   }
