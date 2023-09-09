@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../../../models/contact';
 import { ContactService } from '../../../services/contact.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-form',
@@ -8,7 +9,10 @@ import { ContactService } from '../../../services/contact.service';
   styleUrls: ['./contact-form.component.css'],
 })
 export class ContactFormComponent implements OnInit {
-  constructor(private contactService: ContactService) {}
+  constructor(
+    private contactService: ContactService,
+    private router: Router,
+  ) {}
 
   ngOnInit() {}
 
@@ -19,5 +23,9 @@ export class ContactFormComponent implements OnInit {
       message: formData.message,
     };
     this.contactService.saveData(contactData);
+  }
+
+  onBackToHome() {
+    this.router.navigate(['/']);
   }
 }

@@ -65,5 +65,5 @@
   <button [disabled]="contactForm.invalid" class="btn btn-info btn-theme">
     Send Message
   </button>
-  <button class="btn btn-home ml-2">Back To Home</button>
+  <button (click)="onBackToHome()" class="btn btn-home ml-2">Back To Home</button>
 </form>
