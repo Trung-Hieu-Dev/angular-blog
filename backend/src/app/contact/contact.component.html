@@ -30,11 +30,11 @@
             </thead>
 
             <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+            <tr *ngFor="let contact of contactArray; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{contact.data.name}}</td>
+              <td>{{contact.data.email}}</td>
+              <td>{{contact.data.message}}</td>
               <td>
                 <div class="d-inline-flex justify-content-between">
                   <button
